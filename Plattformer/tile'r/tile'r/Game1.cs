@@ -222,19 +222,15 @@ namespace tile_r
 
                     if (!standing)
                     {
-
-                        if (playerVelocity.Y < 0)
-                            playerVelocity.Y *= -1f;
-
-                        if (playerVelocity.X < 0)
-                            playerVelocity.X *= -0.5f;
-
-
-                        if ((playerVelocity.Y >= 0) && (player.Position.Y > 4))
+                        if (playerVelocity.Y >= 0)
                         {
                             playerVelocity.Y = 0f;
                             standing = true;
                         }
+
+                        if (playerVelocity.Y < 0)
+                            playerVelocity.Y *= -1f;
+
                     }
 
                     if (standing)
