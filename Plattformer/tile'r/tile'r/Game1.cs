@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using TestGame.TileEngine;
 using Shooter;
 
+
 namespace tile_r
 {
     /// <summary>
@@ -29,7 +30,8 @@ namespace tile_r
         Rectangle playerRect;
         float rotation;
         KeyboardState prevKey;
-        bool test;
+        public Camera2D cam = new Camera2D();
+
 
         int[,] map = new int[,]
             {
@@ -85,6 +87,11 @@ namespace tile_r
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             crate = Content.Load<Texture2D>("crate");
+
+
+            cam.Pos = new Vector2(682.0f, 334.0f);
+
+             
 
             Createflor();
 
@@ -162,8 +169,11 @@ namespace tile_r
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            
+            
+            KeyboardState keyboardState = Keyboard.GetState();
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Escape))
                 this.Exit();
 
             playerVelocity.X = Clamp(playerVelocity.X, -400f, 400f);
@@ -171,7 +181,7 @@ namespace tile_r
 
             IsMouseVisible = true;
             MouseState mouse = Mouse.GetState();
-            Console.WriteLine(mouse.X + " " + mouse.Y);
+          //  Console.WriteLine(mouse.X + " " + mouse.Y);
 
             playerRect = new Rectangle((int)player.Position.X, (int)player.Position.Y, 24, 42);
 
@@ -181,7 +191,7 @@ namespace tile_r
 
             
 
-            KeyboardState keyboardState = Keyboard.GetState();
+            
 
             if (keyboardState.IsKeyDown(Keys.F) && !prevKey.IsKeyDown(Keys.F))
             {
@@ -201,7 +211,7 @@ namespace tile_r
 
             }
 
-
+            
             
 
             foreach (Tile tile in tileList)
@@ -276,6 +286,32 @@ namespace tile_r
 
 
 
+            if (keyboardState.IsKeyDown(Keys.A))
+            {
+                cam.Pos += new Vector2(-2f, 0f);
+            }
+
+            if (keyboardState.IsKeyDown(Keys.D))
+            {
+                cam.Pos += new Vector2(2f, 0f);
+
+            }
+
+
+            if (keyboardState.IsKeyDown(Keys.S))
+            {
+
+                cam.Pos += new Vector2(0f, 2f);
+            }
+
+            if (keyboardState.IsKeyDown(Keys.W))
+            {
+
+                cam.Pos += new Vector2(0f, -2f);
+            }
+
+
+
             if (keyboardState.IsKeyDown(Keys.Left))
             {
                 playerVelocity -= new Vector2(10f, 0);
@@ -284,6 +320,7 @@ namespace tile_r
             if (keyboardState.IsKeyDown(Keys.Right))
             {
                 playerVelocity += new Vector2(10f, 0);
+               
             }
 
           
@@ -304,7 +341,8 @@ namespace tile_r
                 player.Update(gameTime);
 
                 prevKey = keyboardState;
-                
+
+                cam.Pos += playerVelocity / 80;
 
             // TODO: Add your update logic here
 
@@ -319,7 +357,13 @@ namespace tile_r
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.BackToFront,
+                        BlendState.AlphaBlend,
+                        null,
+                        null,
+                        null,
+                        null,
+                        cam.get_transformation(GraphicsDevice /*Send the variable that has your graphic device here*/));
 
             foreach (Tile tile in tileList)
             {
@@ -328,8 +372,8 @@ namespace tile_r
             }
 
             player.Draw(spriteBatch, rotation);
-           // Console.WriteLine(player.Position.X + " " + player.Position.Y);
-            Console.WriteLine(standing);
+            Console.WriteLine(cam.Pos.X + " " + cam.Pos.Y);
+          //  Console.WriteLine(standing);
 
             spriteBatch.End();
 
