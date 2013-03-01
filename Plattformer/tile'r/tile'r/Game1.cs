@@ -37,6 +37,15 @@ namespace tile_r
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,}
 
@@ -79,6 +88,10 @@ namespace tile_r
 
             Createflor();
 
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.ApplyChanges();
+            
             Animation animation = new Animation();
 
             sprite = Content.Load<Texture2D>("jasperrun");
@@ -169,6 +182,26 @@ namespace tile_r
             
 
             KeyboardState keyboardState = Keyboard.GetState();
+
+            if (keyboardState.IsKeyDown(Keys.F) && !prevKey.IsKeyDown(Keys.F))
+            {
+
+                graphics.IsFullScreen = !graphics.IsFullScreen;
+                graphics.ApplyChanges();
+
+            }
+
+
+            if (keyboardState.IsKeyDown(Keys.G) && !prevKey.IsKeyDown(Keys.G))
+            {
+
+                graphics.PreferredBackBufferWidth = 1360;
+                graphics.PreferredBackBufferHeight = 768;
+                graphics.ApplyChanges();
+
+            }
+
+
             
 
             foreach (Tile tile in tileList)
@@ -200,16 +233,18 @@ namespace tile_r
             }
             else
             {
+                    playerVelocity.X /= 1.016f;
                 if (playerVelocity.X < 0)
                 {
-                    playerVelocity.X += 5.1f;
+                    playerVelocity.X+=2;
+
                 }
                 else if (playerVelocity.X > 0)
                 {
-                    playerVelocity.X -= 5.1f;
+                    playerVelocity.X-=2;
                 }
 
-                if (keyboardState.IsKeyDown(Keys.Up) && !prevKey.IsKeyDown(Keys.Up))
+                if (keyboardState.IsKeyDown(Keys.Space) && !prevKey.IsKeyDown(Keys.Space))
                 {
                     standing = false;
                     playerVelocity -= new Vector2(0, 350f);
