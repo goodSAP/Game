@@ -91,7 +91,7 @@ namespace tile_r
 
             cam.Pos = new Vector2(682.0f, 334.0f);
 
-             
+            
 
             Createflor();
 
@@ -104,7 +104,7 @@ namespace tile_r
             sprite = Content.Load<Texture2D>("jasperrun");
             animation.Initialize(sprite, new Vector2(0, 0), 24, 42, 4, 100, Color.White, 1f, true);
 
-            player.Initialize(animation, new Vector2(50, 100));
+            player.Initialize(animation, new Vector2(10, 700));
 
             KeyboardState prevKey = Keyboard.GetState();
             
@@ -308,12 +308,12 @@ namespace tile_r
 
 
 
-            if (keyboardState.IsKeyDown(Keys.Left))
+            if (keyboardState.IsKeyDown(Keys.Left)&&standing)
             {
                 playerVelocity -= new Vector2(10f, 0);
             }
 
-            if (keyboardState.IsKeyDown(Keys.Right))
+            if (keyboardState.IsKeyDown(Keys.Right)&&standing)
             {
                 playerVelocity += new Vector2(10f, 0);
                
@@ -338,7 +338,9 @@ namespace tile_r
 
                 prevKey = keyboardState;
 
-                cam.Pos += playerVelocity / 80;
+                cam.Pos += new Vector2((float)Math.Floor(playerVelocity.X / 85), 0);
+                    
+                   
 
             // TODO: Add your update logic here
 
