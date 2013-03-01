@@ -211,9 +211,30 @@ namespace tile_r
 
 
                     if (!standing)
-                        playerVelocity.Y = 0f;
+                    {
 
-                    standing = true;
+                        if (playerVelocity.Y < 0)
+                            playerVelocity.Y *= -1f;
+
+                        if (playerVelocity.X < 0)
+                            playerVelocity.X *= -0.5f;
+
+
+                        if ((playerVelocity.Y >= 0) && (player.Position.Y > 4))
+                        {
+                            playerVelocity.Y = 0f;
+                            standing = true;
+                        }
+                    }
+
+                    if (standing)
+                    {
+                        if ((player.Position.Y + (player.Height / 2) - 5) >= (tile.Position.Y - (tile.SpriteHeight / 2)))
+                            player.Position.Y = (tile.Position.Y - (tile.SpriteHeight / 2) - (player.Height / 2) + 5);
+
+                        
+                    }
+                    
 
                     
                     break;
