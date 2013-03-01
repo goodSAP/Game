@@ -308,12 +308,12 @@ namespace tile_r
 
 
 
-            if (keyboardState.IsKeyDown(Keys.Left)&&standing)
+            if (keyboardState.IsKeyDown(Keys.Left))
             {
                 playerVelocity -= new Vector2(10f, 0);
             }
 
-            if (keyboardState.IsKeyDown(Keys.Right)&&standing)
+            if (keyboardState.IsKeyDown(Keys.Right))
             {
                 playerVelocity += new Vector2(10f, 0);
                
