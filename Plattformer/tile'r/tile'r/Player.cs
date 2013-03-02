@@ -34,6 +34,7 @@ namespace Shooter
         }
 
         public string Facing;
+
         
 
         // Initialize the player
@@ -65,7 +66,7 @@ namespace Shooter
         // Draw the player
         public void Draw(SpriteBatch spriteBatch, float rotation)
         {
-            PlayerAnimation.Draw(spriteBatch, rotation);
+            PlayerAnimation.Draw(spriteBatch, rotation, Facing);
         }
 
     }

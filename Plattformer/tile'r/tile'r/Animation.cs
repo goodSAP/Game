@@ -22,7 +22,7 @@ namespace Shooter
 
 
         // The time we display a frame until the next one
-        int frameTime;
+        public float frameTime;
 
 
         // The number of frames that the animation contains
@@ -59,6 +59,9 @@ namespace Shooter
 
         // Determines if the animation will keep playing or deactivate after one run
         public bool Looping;
+
+
+        public bool draw;
 
 
         // Width of a given frame
@@ -103,53 +106,62 @@ int frametime, Color color, float scale, bool looping)
             if (Active == false)
                 return;
 
+            
 
-            // Update the elapsed time
-            elapsedTime += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-
-            // If the elapsed time is larger than the frame time
-            // we need to switch frames
-            if (elapsedTime > frameTime)
-            {
-                // Move to the next frame
-                currentFrame++;
+                // Update the elapsed time
+                elapsedTime += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
 
 
-                // If the currentFrame is equal to frameCount reset currentFrame to zero
-                if (currentFrame == frameCount)
+                // If the elapsed time is larger than the frame time
+                // we need to switch frames
+                if (elapsedTime > frameTime)
                 {
-                    currentFrame = 0;
-                    // If we are not looping deactivate the animation
-                    if (Looping == false)
-                        Active = false;
+                    if (draw || currentFrame != 0)
+                    {
+                        // Move to the next frame
+                        currentFrame++;
+
+
+                        // If the currentFrame is equal to frameCount reset currentFrame to zero
+                        if (currentFrame == frameCount)
+                        {
+                            currentFrame = 0;
+                            // If we are not looping deactivate the animation
+                            if (Looping == false)
+                                Active = false;
+                        }
+                    }
+
+                    // Reset the elapsed time to zero
+                    elapsedTime = 0;
                 }
+        
 
 
-                // Reset the elapsed time to zero
-                elapsedTime = 0;
-            }
+                // Grab the correct frame in the image strip by multiplying the currentFrame index by the frame width
+                sourceRect = new Rectangle(currentFrame * FrameWidth, 0, FrameWidth, FrameHeight);
 
 
-            // Grab the correct frame in the image strip by multiplying the currentFrame index by the frame width
-            sourceRect = new Rectangle(currentFrame * FrameWidth, 0, FrameWidth, FrameHeight);
-
-
-            // Grab the correct frame in the image strip by multiplying the currentFrame index by the frame width
-            destinationRect = new Rectangle((int)vposition.X,
-            (int)vposition.Y,
-            (int)(FrameWidth),
-            (int)(FrameHeight));
+                // Grab the correct frame in the image strip by multiplying the currentFrame index by the frame width
+                destinationRect = new Rectangle((int)vposition.X,
+                (int)vposition.Y,
+                (int)(FrameWidth),
+                (int)(FrameHeight));
+            
         }
 
 
         // Draw the Animation Strip
-        public void Draw(SpriteBatch spriteBatch, float rotation)
+        public void Draw(SpriteBatch spriteBatch, float rotation, string facing)
         {
             // Only draw the animation when we are active
             if (Active)
             {
-                spriteBatch.Draw(spriteStrip, destinationRect, sourceRect, color, rotation, new Vector2(sourceRect.Width/2, sourceRect.Height/2), SpriteEffects.None, 0);
+
+                if(facing == "left")
+                    spriteBatch.Draw(spriteStrip, destinationRect, sourceRect, color, rotation, new Vector2(sourceRect.Width/2, sourceRect.Height/2), SpriteEffects.FlipHorizontally, 0);
+                else
+                    spriteBatch.Draw(spriteStrip, destinationRect, sourceRect, color, rotation, new Vector2(sourceRect.Width / 2, sourceRect.Height / 2), SpriteEffects.None, 0);
             }
         }
 

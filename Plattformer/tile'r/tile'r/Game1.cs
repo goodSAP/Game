@@ -31,7 +31,8 @@ namespace tile_r
         float rotation;
         KeyboardState prevKey;
         public Camera2D cam = new Camera2D();
-
+        Animation animation = new Animation();
+        bool running;
 
         int[,] map = new int[,]
             {
@@ -99,10 +100,11 @@ namespace tile_r
             graphics.PreferredBackBufferHeight = 720;
             graphics.ApplyChanges();
             
-            Animation animation = new Animation();
+            
 
             sprite = Content.Load<Texture2D>("jasperrun");
-            animation.Initialize(sprite, new Vector2(0, 0), 24, 42, 4, 100, Color.White, 1f, true);
+            animation.Initialize(sprite, new Vector2(0, 0), 24, 42, 4, 150, Color.White, 1f, true);
+            
 
             player.Initialize(animation, new Vector2(10, 700));
 
@@ -260,17 +262,24 @@ namespace tile_r
             }
             else
             {
-                    playerVelocity.X /= 1.016f;
-                if (playerVelocity.X < 0)
-                {
-                    playerVelocity.X+=2;
 
-                }
-                else if (playerVelocity.X > 0)
-                {
-                    playerVelocity.X-=2;
-                }
+                if ((playerVelocity.X < 0 && player.Facing == "right") || (playerVelocity.X > 0 && player.Facing == "left"))
+                    playerVelocity.X /= 1.1f;
 
+                if (!running)
+                {
+                    playerVelocity.X /= 1.1f;
+                    
+                    if (playerVelocity.X < 0)
+                    {
+                        playerVelocity.X += 2;
+
+                    }
+                    else if (playerVelocity.X > 0)
+                    {
+                        playerVelocity.X -= 2;
+                    }
+                }
                 if (keyboardState.IsKeyDown(Keys.Space) && !prevKey.IsKeyDown(Keys.Space))
                 {
                     standing = false;
@@ -306,17 +315,23 @@ namespace tile_r
                 cam.Pos += new Vector2(0f, -2f);
             }
 
-
+            if (keyboardState.IsKeyUp(Keys.Left)&&keyboardState.IsKeyUp(Keys.Right))
+            running = false;
 
             if (keyboardState.IsKeyDown(Keys.Left))
             {
-                playerVelocity -= new Vector2(10f, 0);
+                playerVelocity -= new Vector2(7f, 0);
+                player.Facing = "left";
+                animation.draw = true;
+                running = true;
             }
 
             if (keyboardState.IsKeyDown(Keys.Right))
             {
-                playerVelocity += new Vector2(10f, 0);
-               
+                playerVelocity += new Vector2(7f, 0);
+                player.Facing = "right";
+                animation.draw = true;
+                running = true;
             }
 
           
@@ -326,10 +341,10 @@ namespace tile_r
                 rotation += 0.1f;
             }
 
-          
 
-       
+            
 
+            animation.frameTime = 130f - Math.Abs(playerVelocity.X/10);
          
 
                 player.Position += playerVelocity * elapsed;
@@ -338,8 +353,11 @@ namespace tile_r
 
                 prevKey = keyboardState;
 
-                cam.Pos += new Vector2((float)Math.Floor(playerVelocity.X / 85), 0);
-                    
+
+                if (Math.Abs(playerVelocity.X) > 55)
+                    animation.draw = true;
+                else
+                    animation.draw = false;
                    
 
             // TODO: Add your update logic here
@@ -370,8 +388,8 @@ namespace tile_r
             }
 
             player.Draw(spriteBatch, rotation);
-            Console.WriteLine(cam.Pos.X + " " + cam.Pos.Y);
-          //  Console.WriteLine(standing);
+          //  Console.WriteLine(cam.Pos.X + " " + cam.Pos.Y);
+            Console.WriteLine(playerVelocity.X);
 
             spriteBatch.End();
 
