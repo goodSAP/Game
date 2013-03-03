@@ -224,22 +224,74 @@ namespace tile_r
 
                     if (!standing)
                     {
-                        if (playerVelocity.Y >= 0)
+
+                        //Right of the tile
+
+                        if ((player.Position.X - player.Width / 2) > (tile.Position.X + tile.SpriteWidth / 2))
                         {
+                            if ((player.Position.Y + player.Height / 2) - 10 > (tile.Position.Y - tile.SpriteHeight / 2))
+                            {
+                                if ((player.Position.Y - player.Height / 2) < (tile.Position.Y + (tile.SpriteHeight / 2) - 10))
+                                {
+                                    playerVelocity.X = Clamp(playerVelocity.X, 100f, 400f);
+                                }
+                            }
+                        }
+
+                        //Left of the tile
+
+                        if ((player.Position.X + player.Width / 2) < (tile.Position.X - tile.SpriteWidth / 2))
+                        {
+                            if ((player.Position.Y + player.Height / 2) - 10 > (tile.Position.Y - tile.SpriteHeight / 2))
+                            {
+                                if ((player.Position.Y - player.Height / 2) < (tile.Position.Y + (tile.SpriteHeight / 2) - 10))
+                                {
+                                    playerVelocity.X = Clamp(playerVelocity.X, -400f, -100f);
+                                    player.Position.Y = 30;
+                                }
+                            }
+                        }
+
+                        //On the tile
+
+                        if ((playerVelocity.Y >= 0) && (player.Position.Y + (player.Position.Y + player.Height / 2) - 10 > tile.Position.Y - tile.SpriteHeight / 2))
+                        {
+
                             playerVelocity.Y = 0f;
                             standing = true;
                         }
 
+                        //Beneath the tile
+
                         if (playerVelocity.Y < 0)
-                            playerVelocity.Y *= -1f;
+                        {
+                            if ((player.Position.Y - player.Height / 2) > (tile.Position.Y + (tile.SpriteHeight / 2)))
+                                playerVelocity.Y *= -1f;
+                        }
+
+
 
                     }
 
                     if (standing)
                     {
-                        if ((player.Position.Y + (player.Height / 2) - 5) >= (tile.Position.Y - (tile.SpriteHeight / 2)))
-                            player.Position.Y = (tile.Position.Y - (tile.SpriteHeight / 2) - (player.Height / 2) + 5);
+                        //Inside the tile
+                        if (playerVelocity.Y >= 0)
+                            if ((player.Position.X + player.Width / 2) > (tile.Position.X - tile.SpriteWidth / 2))
+                            {
+                                if ((player.Position.X - player.Width / 2) < (tile.Position.X + tile.SpriteWidth / 2))
+                                {
+                                    if ((player.Position.Y + player.Height / 2) > (tile.Position.Y - tile.SpriteHeight / 2))
+                                    {
+                                        player.Position.Y = (tile.Position.Y - (tile.SpriteHeight / 2) - (player.Height / 2) + 5);
+                                    }
 
+                                    /*/   if ((player.Position.Y - player.Height / 2) < (tile.Position.Y + tile.SpriteHeight / 2))
+                                       {
+                                           player.Position.Y = (tile.Position.Y + (tile.SpriteHeight / 2) + (player.Height / 2) - 5);
+                                       } /*/
+                                }
+                            }
 
                     }
 
