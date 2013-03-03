@@ -229,9 +229,9 @@ namespace tile_r
 
                         if ((player.Position.X - player.Width / 2) > (tile.Position.X + tile.SpriteWidth / 2))
                         {
-                            if ((player.Position.Y + player.Height / 2) - 10 > (tile.Position.Y - tile.SpriteHeight / 2))
+                            if ((player.Position.Y + player.Height) - 10 > (tile.Position.Y))
                             {
-                                if ((player.Position.Y - player.Height / 2) < (tile.Position.Y + (tile.SpriteHeight / 2) - 10))
+                                if ((player.Position.Y) < (tile.Position.Y + (tile.SpriteHeight) - 10))
                                 {
                                     playerVelocity.X = Clamp(playerVelocity.X, 100f, 400f);
                                 }
@@ -240,21 +240,20 @@ namespace tile_r
 
                         //Left of the tile
 
-                        if ((player.Position.X + player.Width / 2) < (tile.Position.X - tile.SpriteWidth / 2))
+                        if ((player.Position.X + player.Width / 2) < (tile.Position.X))
                         {
-                            if ((player.Position.Y + player.Height / 2) - 10 > (tile.Position.Y - tile.SpriteHeight / 2))
+                            if ((player.Position.Y + player.Height) - 10 > (tile.Position.Y))
                             {
-                                if ((player.Position.Y - player.Height / 2) < (tile.Position.Y + (tile.SpriteHeight / 2) - 10))
+                                if ((player.Position.Y) < (tile.Position.Y + (tile.SpriteHeight) - 10))
                                 {
                                     playerVelocity.X = Clamp(playerVelocity.X, -400f, -100f);
-                                    player.Position.Y = 30;
                                 }
                             }
                         }
 
                         //On the tile
 
-                        if ((playerVelocity.Y >= 0) && (player.Position.Y + (player.Position.Y + player.Height / 2) - 10 > tile.Position.Y - tile.SpriteHeight / 2))
+                        if ((playerVelocity.Y >= 0) && ((player.Position.Y + player.Height) > tile.Position.Y))
                         {
 
                             playerVelocity.Y = 0f;
@@ -265,7 +264,7 @@ namespace tile_r
 
                         if (playerVelocity.Y < 0)
                         {
-                            if ((player.Position.Y - player.Height / 2) > (tile.Position.Y + (tile.SpriteHeight / 2)))
+                            if ((player.Position.Y) > (tile.Position.Y + tile.SpriteHeight - 5))
                                 playerVelocity.Y *= -1f;
                         }
 
@@ -277,13 +276,13 @@ namespace tile_r
                     {
                         //Inside the tile
                         if (playerVelocity.Y >= 0)
-                            if ((player.Position.X + player.Width / 2) > (tile.Position.X - tile.SpriteWidth / 2))
+                            if ((player.Position.X + player.Width - 10) > (tile.Position.X))
                             {
-                                if ((player.Position.X - player.Width / 2) < (tile.Position.X + tile.SpriteWidth / 2))
+                                if ((player.Position.X + 10) < (tile.Position.X + tile.SpriteWidth))
                                 {
-                                    if ((player.Position.Y + player.Height / 2) > (tile.Position.Y - tile.SpriteHeight / 2))
+                                    if ((player.Position.Y + player.Height) > (tile.Position.Y))
                                     {
-                                        player.Position.Y = (tile.Position.Y - (tile.SpriteHeight / 2) - (player.Height / 2) + 5);
+                                        player.Position.Y = (tile.Position.Y - (player.Height) + 2);
                                     }
 
                                     /*/   if ((player.Position.Y - player.Height / 2) < (tile.Position.Y + tile.SpriteHeight / 2))
