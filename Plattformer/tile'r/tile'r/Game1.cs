@@ -33,6 +33,7 @@ namespace tile_r
         public Camera2D cam = new Camera2D();
         Animation animation = new Animation();
         bool running;
+        Texture2D wood;
 
         int[,] map = new int[,]
             {
@@ -89,6 +90,7 @@ namespace tile_r
 
             crate = Content.Load<Texture2D>("crate");
 
+            wood = Content.Load<Texture2D>("floor");
 
             cam.Pos = new Vector2(682.0f, 334.0f);
 
@@ -146,7 +148,7 @@ namespace tile_r
                         Tile tile;
                         Vector2 pos = new Vector2(48 * x, 48 * y);
 
-                        tile = new Tile(crate, 48, 48, pos, true);
+                        tile = new Tile(wood, 48, 48, pos, true);
 
                         tileList.Add(tile);
 
@@ -265,7 +267,8 @@ namespace tile_r
                         if (playerVelocity.Y < 0)
                         {
                             if ((player.Position.Y) > (tile.Position.Y + tile.SpriteHeight - 5))
-                                playerVelocity.Y *= -1f;
+                                playerVelocity.Y = Math.Abs(playerVelocity.Y);
+                                //playerVelocity.Y *= -1f;
                         }
 
 
