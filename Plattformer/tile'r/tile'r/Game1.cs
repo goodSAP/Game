@@ -34,6 +34,7 @@ namespace tile_r
         Animation animation = new Animation();
         bool running;
         Texture2D wood;
+        GamePadState gamepad;
 
         int[,] map = new int[,]
             {
@@ -94,7 +95,7 @@ namespace tile_r
 
             cam.Pos = new Vector2(682.0f, 334.0f);
 
-
+            gamepad = GamePad.GetState(PlayerIndex.One);
 
             Createflor();
 
@@ -288,10 +289,10 @@ namespace tile_r
                                         player.Position.Y = (tile.Position.Y - (player.Height) + 2);
                                     }
 
-                                    /*/   if ((player.Position.Y - player.Height / 2) < (tile.Position.Y + tile.SpriteHeight / 2))
+                                     /*  if ((player.Position.Y < (tile.Position.Y + tile.SpriteHeight)))
                                        {
-                                           player.Position.Y = (tile.Position.Y + (tile.SpriteHeight / 2) + (player.Height / 2) - 5);
-                                       } /*/
+                                           player.Position.Y = (tile.Position.Y + tile.SpriteHeight + player.Height - 5);
+                                       }*/ 
                                 }
                             }
 
@@ -335,12 +336,14 @@ namespace tile_r
                     }
                 }
 
-                if (keyboardState.IsKeyDown(Keys.Space) && !prevKey.IsKeyDown(Keys.Space))
+                if ((keyboardState.IsKeyDown(Keys.Space) && !prevKey.IsKeyDown(Keys.Space)) || (gamepad.Buttons.A == ButtonState.Pressed))
                 {
                     standing = false;
                     playerVelocity -= new Vector2(0, 350f);
                 }
 
+
+               
 
             }
 
@@ -390,6 +393,24 @@ namespace tile_r
             }
 
 
+            playerVelocity += new Vector2(gamepad.ThumbSticks.Left.X*7, 0);
+
+            if (gamepad.ThumbSticks.Left.X < 0)
+            {
+                player.Facing = "left";
+                animation.draw = true;
+                running = true;
+            }
+
+            if (gamepad.ThumbSticks.Left.X > 0)
+            {
+                player.Facing = "right";
+                animation.draw = true;
+                running = true;
+            }
+
+
+
             if (keyboardState.IsKeyDown(Keys.Down))
             {
 
@@ -397,6 +418,9 @@ namespace tile_r
             }
 
 
+            gamepad = GamePad.GetState(PlayerIndex.One);
+
+            
 
 
             animation.frameTime = 130f - Math.Abs(playerVelocity.X / 10);
@@ -407,6 +431,10 @@ namespace tile_r
             player.Update(gameTime);
 
             prevKey = keyboardState;
+
+
+            
+
 
 
             if (Math.Abs(playerVelocity.X) > 55)
