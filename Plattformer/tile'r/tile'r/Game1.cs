@@ -35,6 +35,7 @@ namespace tile_r
         bool running;
         Texture2D wood;
         GamePadState gamepad;
+        
 
         int[,] map = new int[,]
             {
@@ -49,7 +50,7 @@ namespace tile_r
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,}
@@ -93,6 +94,8 @@ namespace tile_r
 
             wood = Content.Load<Texture2D>("floor");
 
+         
+
             cam.Pos = new Vector2(682.0f, 334.0f);
 
             gamepad = GamePad.GetState(PlayerIndex.One);
@@ -103,6 +106,7 @@ namespace tile_r
             graphics.PreferredBackBufferHeight = 720;
             graphics.ApplyChanges();
 
+            
 
 
             sprite = Content.Load<Texture2D>("jasperrun");
@@ -234,9 +238,10 @@ namespace tile_r
                         {
                             if ((player.Position.Y + player.Height) - 10 > (tile.Position.Y))
                             {
-                                if ((player.Position.Y) < (tile.Position.Y + (tile.SpriteHeight) - 10))
+                                if ((player.Position.Y) < (tile.Position.Y + (tile.SpriteHeight)))
                                 {
                                     playerVelocity.X = Clamp(playerVelocity.X, 100f, 400f);
+                                    
                                 }
                             }
                         }
@@ -247,9 +252,10 @@ namespace tile_r
                         {
                             if ((player.Position.Y + player.Height) - 10 > (tile.Position.Y))
                             {
-                                if ((player.Position.Y) < (tile.Position.Y + (tile.SpriteHeight) - 10))
+                                if ((player.Position.Y) < (tile.Position.Y + (tile.SpriteHeight)))
                                 {
-                                    playerVelocity.X = Clamp(playerVelocity.X, -400f, -100f);
+                                   playerVelocity.X = Clamp(playerVelocity.X, -400f, -100f);
+                                    
                                 }
                             }
                         }
@@ -314,9 +320,13 @@ namespace tile_r
             if (!standing)
             {
                 playerVelocity += new Vector2(0, 9.82f);
+                
             }
             else
             {
+
+                
+                
 
                 if ((playerVelocity.X < 0 && player.Facing == "right") || (playerVelocity.X > 0 && player.Facing == "left"))
                     playerVelocity.X /= 1.1f;
@@ -380,6 +390,7 @@ namespace tile_r
             {
                 playerVelocity -= new Vector2(7f, 0);
                 player.Facing = "left";
+                
                 animation.draw = true;
                 running = true;
             }
@@ -388,6 +399,7 @@ namespace tile_r
             {
                 playerVelocity += new Vector2(7f, 0);
                 player.Facing = "right";
+                
                 animation.draw = true;
                 running = true;
             }
@@ -464,11 +476,14 @@ namespace tile_r
                         null,
                         cam.get_transformation(GraphicsDevice /*Send the variable that has your graphic device here*/));
 
+         
             foreach (Tile tile in tileList)
             {
                 tile.Draw(spriteBatch);
 
             }
+
+            
 
             player.Draw(spriteBatch, rotation);
             //  Console.WriteLine(cam.Pos.X + " " + cam.Pos.Y);
