@@ -36,6 +36,7 @@ namespace tile_r
         Texture2D wood;
         GamePadState gamepad;
         
+        
 
         int[,] map = new int[,]
             {
