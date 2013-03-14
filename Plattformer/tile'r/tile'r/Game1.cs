@@ -23,8 +23,9 @@ namespace tile_r
         SpriteBatch spriteBatch;
         List<Tile> tileList = new List<Tile>();
         Texture2D crate;
-        public Player player;
+        Player player;
         Texture2D sprite;
+        Texture2D speederSprite;
         Vector2 playerVelocity = new Vector2(0, 0);
         bool standing = false;
         float rotation;
@@ -37,6 +38,7 @@ namespace tile_r
         List<Ninja> ninjaList = new List<Ninja>();
         Texture2D ninjaTexture;
         float tempPos;
+        List<Speeder> speederList = new List<Speeder>();
         
         
 
@@ -100,6 +102,8 @@ namespace tile_r
             wood = Content.Load<Texture2D>("floor");
 
             ninjaTexture = Content.Load<Texture2D>("Ninja");
+
+            //speederSprite = Content.Load<Texture2D>("Speeder");
 
             cam.Pos = new Vector2(682.0f, 334.0f);
 
@@ -201,7 +205,7 @@ namespace tile_r
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 
-
+        
 
 
 
@@ -232,7 +236,17 @@ namespace tile_r
 
             }
 
+            if (keyboardState.IsKeyDown(Keys.E) && !prevKey.IsKeyDown(Keys.E))
+            {
+                Speeder speeder = new Speeder(sprite,player.Position + new Vector2(80, -40),player);
+                speederList.Add(speeder);
 
+            }
+
+            foreach (Speeder speeder in speederList)
+            {
+                
+            }
 
 
             foreach (Tile tile in tileList)
@@ -266,7 +280,7 @@ namespace tile_r
                             {
                                 if ((player.Position.Y) < (tile.Position.Y + (tile.SpriteHeight)))
                                 {
-                                    playerVelocity.X = Clamp(playerVelocity.X, 100f, 400f);
+                                    playerVelocity.X = Clamp(playerVelocity.X, 50f, 400f);
                                     
                                 }
                             }
@@ -280,7 +294,7 @@ namespace tile_r
                             {
                                 if ((player.Position.Y) < (tile.Position.Y + (tile.SpriteHeight)))
                                 {
-                                   playerVelocity.X = Clamp(playerVelocity.X, -400f, -100f);
+                                   playerVelocity.X = Clamp(playerVelocity.X, -400f, -50f);
                                     
                                 }
                             }
@@ -500,6 +514,8 @@ namespace tile_r
 
             // TODO: Add your update logic here
 
+
+
             base.Update(gameTime);
         }
 
@@ -532,6 +548,10 @@ namespace tile_r
                 ninja.Draw(spriteBatch);
             }
 
+            foreach (Speeder speeder in speederList)
+            {
+                speeder.Draw(spriteBatch);
+            }
             
 
             player.Draw(spriteBatch, rotation);

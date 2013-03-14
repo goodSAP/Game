@@ -17,7 +17,7 @@ namespace tile_r
         public Rectangle hitbox;
         public float timer = 0.0f;
         public const float timeLimit = 1.0f;
-        Vector2 speederVelocity;
+        Vector2 Velocity;
         float elapsed;
         public int health = 5;
         public int damage = 5;
@@ -37,10 +37,14 @@ namespace tile_r
             elapsed = (float)gametime.ElapsedGameTime.TotalSeconds;
             hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
 
-            if (hitbox.Intersects(player.))
-            {
-            
-            }
+            position += Velocity;
+
+
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, position, Color.White);
         }
 
     }
