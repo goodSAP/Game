@@ -35,9 +35,6 @@ namespace tile_r
         bool running;
         Texture2D wood;
         GamePadState gamepad;
-        List<Ninja> ninjaList = new List<Ninja>();
-        Texture2D ninjaTexture;
-        float tempPos;
         
         
 
@@ -81,8 +78,6 @@ namespace tile_r
         {
             // TODO: Add your initialization logic here
             player = new Player();
-            this.IsFixedTimeStep = false;
-            
 
             base.Initialize();
         }
@@ -100,7 +95,7 @@ namespace tile_r
 
             wood = Content.Load<Texture2D>("floor");
 
-            ninjaTexture = Content.Load<Texture2D>("Ninja");
+         
 
             cam.Pos = new Vector2(682.0f, 334.0f);
 
@@ -185,7 +180,7 @@ namespace tile_r
         protected override void Update(GameTime gameTime)
         {
 
-            
+
             KeyboardState keyboardState = Keyboard.GetState();
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Escape))
@@ -226,33 +221,11 @@ namespace tile_r
 
             }
 
-            if (keyboardState.IsKeyDown(Keys.Q) && !prevKey.IsKeyDown(Keys.Q))
-            {
-
-                Ninja ninja = new Ninja(ninjaTexture, player.Position, playerVelocity);
-                ninjaList.Add(ninja);
-
-            }
-
 
 
 
             foreach (Tile tile in tileList)
             {
-
-
-                foreach (Ninja ninja in ninjaList)
-                {
-                    if (tile.BoundingBox.Intersects(ninja.hitbox))
-                    {
-                        ninja.standning = true;
-                       
-                    }
-
-                    
-                }
-
-
                 if (tile.BoundingBox.Intersects(playerRect))
                 {
 
@@ -473,24 +446,7 @@ namespace tile_r
             prevKey = keyboardState;
 
 
-            foreach (Ninja ninja in ninjaList)
-            {
-                ninja.Update(gameTime);
-                if ((ninja.timer >= 1.5f) || ninja.position.Y > 800)
-                {
-                    ninja.respawn(player.Position, playerVelocity);
-                    ninja.timer = 0f;
-                }
-                if (ninja.timer > 0 && ninja.timer <= 1.5f)
-                {
-                    if (playerRect.Intersects(ninja.hitbox)&& !ninja.standning)
-                    {
-                        ninjaList.Remove(ninja);
-                    }
-
-                }
-            }
-                
+            
 
 
 
@@ -526,12 +482,6 @@ namespace tile_r
             {
                 tile.Draw(spriteBatch);
 
-            }
-
-
-            foreach (Ninja ninja in ninjaList)
-            {
-                ninja.Draw(spriteBatch);
             }
 
             
