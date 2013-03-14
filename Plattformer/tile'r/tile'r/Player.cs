@@ -6,7 +6,7 @@ using tile_r;
 
 namespace Shooter
 {
-    public class Player
+    class Player
     {
         // Animation representing the player
         public Animation PlayerAnimation;
