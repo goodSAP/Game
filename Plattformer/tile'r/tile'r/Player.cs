@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using tile_r;
 
 
 namespace Shooter
@@ -12,7 +13,9 @@ namespace Shooter
 
         // Position of the Player relative to the upper left side of the screen
         public Vector2 Position;
-        
+
+        //Hitbox
+        public Rectangle hitbox;
 
         // State of the player
         public bool Active;
@@ -32,6 +35,8 @@ namespace Shooter
             get { return PlayerAnimation.FrameHeight; }
     
         }
+
+
 
         public string Facing;
 
@@ -61,6 +66,8 @@ namespace Shooter
         {
             PlayerAnimation.Position = Position;
             PlayerAnimation.Update(gameTime);
+
+            hitbox  = new Rectangle((int)Position.X, (int)Position.Y, 24, 42);
         }
 
         // Draw the player

@@ -23,11 +23,10 @@ namespace tile_r
         SpriteBatch spriteBatch;
         List<Tile> tileList = new List<Tile>();
         Texture2D crate;
-        Player player;
+        public Player player;
         Texture2D sprite;
         Vector2 playerVelocity = new Vector2(0, 0);
         bool standing = false;
-        Rectangle playerRect;
         float rotation;
         KeyboardState prevKey;
         public Camera2D cam = new Camera2D();
@@ -113,7 +112,7 @@ namespace tile_r
             graphics.ApplyChanges();
 
             
-
+            
 
             sprite = Content.Load<Texture2D>("jasperrun");
             animation.Initialize(sprite, new Vector2(0, 0), 24, 42, 4, 150, Color.White, 1f, true);
@@ -198,7 +197,6 @@ namespace tile_r
             MouseState mouse = Mouse.GetState();
             //  Console.WriteLine(mouse.X + " " + mouse.Y);
 
-            playerRect = new Rectangle((int)player.Position.X, (int)player.Position.Y, 24, 42);
 
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -253,7 +251,7 @@ namespace tile_r
                 }
 
 
-                if (tile.BoundingBox.Intersects(playerRect))
+                if (tile.BoundingBox.Intersects(player.hitbox))
                 {
 
 
@@ -483,7 +481,7 @@ namespace tile_r
                 }
                 if (ninja.timer > 0 && ninja.timer <= 1.5f)
                 {
-                    if (playerRect.Intersects(ninja.hitbox)&& !ninja.standning)
+                    if (player.hitbox.Intersects(ninja.hitbox)&& !ninja.standning)
                     {
                         ninjaList.Remove(ninja);
                     }
