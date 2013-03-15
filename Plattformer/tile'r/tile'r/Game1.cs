@@ -302,7 +302,7 @@ namespace tile_r
 
                         //On the tile
 
-                        if ((playerVelocity.Y >= 0) && ((player.Position.Y + player.Height) > tile.Position.Y))
+                        if (((playerVelocity.Y >= 0) && ((player.Position.Y + player.Height) > tile.Position.Y))&&!(tile.BoundingBox.Top==player.hitbox.Bottom))
                         {
 
                             playerVelocity.Y = 0f;
