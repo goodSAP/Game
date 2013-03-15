@@ -67,7 +67,7 @@ namespace Shooter
             PlayerAnimation.Position = Position;
             PlayerAnimation.Update(gameTime);
 
-            hitbox  = new Rectangle((int)Position.X, (int)Position.Y, 24, 42);
+            hitbox  = new Rectangle((int)Position.X, (int)Position.Y, PlayerAnimation.FrameWidth,PlayerAnimation.FrameHeight);
         }
 
         // Draw the player
