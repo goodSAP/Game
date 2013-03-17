@@ -39,7 +39,7 @@ namespace tile_r
         Texture2D ninjaTexture;
         float tempPos;
         List<Speeder> speederList = new List<Speeder>();
-        
+        float jump = 550;
         
 
         int[,] map = new int[,]
@@ -82,7 +82,7 @@ namespace tile_r
         {
             // TODO: Add your initialization logic here
             player = new Player();
-            this.IsFixedTimeStep = false;
+            
             
 
             base.Initialize();
@@ -115,9 +115,14 @@ namespace tile_r
             graphics.PreferredBackBufferHeight = 720;
             graphics.ApplyChanges();
 
-            
-            
 
+            double dt = (double)1000 / (double)100;
+            graphics.SynchronizeWithVerticalRetrace = false;
+
+            this.TargetElapsedTime = TimeSpan.FromMilliseconds(dt);
+            graphics.ApplyChanges();
+            
+            
             sprite = Content.Load<Texture2D>("jasperrunCopy");
             animation.Initialize(sprite, new Vector2(0, 0), 48, 84, 4, 150, Color.White, 1f, true);
 
@@ -227,6 +232,9 @@ namespace tile_r
                 graphics.ApplyChanges();
 
             }
+
+            
+
 
             if (keyboardState.IsKeyDown(Keys.Q) && !prevKey.IsKeyDown(Keys.Q))
             {
@@ -389,7 +397,7 @@ namespace tile_r
                 if ((keyboardState.IsKeyDown(Keys.Space) && !prevKey.IsKeyDown(Keys.Space)) || (gamepad.Buttons.A == ButtonState.Pressed))
                 {
                     standing = false;
-                    playerVelocity -= new Vector2(0, 350f);
+                    playerVelocity -= new Vector2(0, jump);
                 }
 
 
@@ -582,6 +590,9 @@ namespace tile_r
 
         }
 
+
+
+       
 
     }
 }
