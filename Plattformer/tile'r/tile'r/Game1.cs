@@ -116,7 +116,7 @@ namespace tile_r
             graphics.ApplyChanges();
 
 
-            double dt = (double)1000 / (double)100;
+            double dt = (double)1000 / (double)120;
             graphics.SynchronizeWithVerticalRetrace = false;
 
             this.TargetElapsedTime = TimeSpan.FromMilliseconds(dt);
