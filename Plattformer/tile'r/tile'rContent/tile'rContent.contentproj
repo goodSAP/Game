@@ -42,36 +42,54 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Crate.png">
+    <Compile Include="art\Crate.png">
       <Name>Crate</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="jasperrun.png">
+    <Compile Include="art\jasperrun.png">
       <Name>jasperrun</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="floor board.png">
+    <Compile Include="art\floor board.png">
       <Name>floor</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="legbrace mcgee.png">
+    <Compile Include="art\legbrace mcgee.png">
       <Name>Ninja</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="jasperrunCopy.png">
+    <Compile Include="art\jasperrunCopy.png">
       <Name>jasperrunCopy</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="art\fShelf\hyll plan med höger fot.png">
+      <Name>shelfRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="art\fShelf\hyll plan med vänster fot.png">
+      <Name>shelfLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="art\fShelf\hyll plan.png">
+      <Name>shelfMid</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -25,11 +25,12 @@ namespace tile_r
         Texture2D crate;
         Player player;
         Texture2D sprite;
-        Texture2D speederSprite;
+   //     Texture2D speederSprite;
         Vector2 playerVelocity = new Vector2(0, 0);
         bool standing = false;
         float rotation;
         KeyboardState prevKey;
+        GamePadState prevGamePad;
         public Camera2D cam = new Camera2D();
         Animation animation = new Animation();
         bool running;
@@ -37,26 +38,26 @@ namespace tile_r
         GamePadState gamepad;
         List<Ninja> ninjaList = new List<Ninja>();
         Texture2D ninjaTexture;
-        float tempPos;
+     //   float tempPos;
         List<Speeder> speederList = new List<Speeder>();
         float jump = 950;
         
 
         int[,] map = new int[,]
             {
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-            {0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-            {0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-            {0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,},
-            {0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,2,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,4,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,2,3,3,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,4,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,2,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,}
 
@@ -97,11 +98,11 @@ namespace tile_r
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            crate = Content.Load<Texture2D>("crate");
+            crate = Content.Load<Texture2D>("art/crate");
 
-            wood = Content.Load<Texture2D>("floor");
+            wood = Content.Load<Texture2D>("art/floor");
 
-            ninjaTexture = Content.Load<Texture2D>("Ninja");
+            ninjaTexture = Content.Load<Texture2D>("art/Ninja");
 
             //speederSprite = Content.Load<Texture2D>("Speeder");
 
@@ -123,14 +124,14 @@ namespace tile_r
             graphics.ApplyChanges();
             
             
-            sprite = Content.Load<Texture2D>("jasperrunCopy");
+            sprite = Content.Load<Texture2D>("art/jasperrunCopy");
             animation.Initialize(sprite, new Vector2(0, 0), 48, 84, 4, 150, Color.White, 1f, true);
 
 
-            player.Initialize(animation, new Vector2(10, -700));
+            player.Initialize(animation, new Vector2(200, -700));
 
             KeyboardState prevKey = Keyboard.GetState();
-
+            prevGamePad = GamePad.GetState(PlayerIndex.One);
 
             // TODO: use this.Content to load your game content here
         }
@@ -160,7 +161,60 @@ namespace tile_r
 
 
 
+                    switch (textureIndex)
+                    { 
+                        case 1 :
+                        Tile tile;
+                        Vector2 pos = new Vector2(48 * x, 48 * y);
 
+                        tile = new Tile(wood, 48, 48, pos, true);
+
+                        tileList.Add(tile);
+
+                        Console.WriteLine("x=" + x + " y=" + y + " is " + textureIndex);
+
+                            break;
+
+                        case 2:
+                            
+                        
+
+                        tile = new Tile(Content.Load<Texture2D>("art/fShelf/shelfLeft"), 48, 48, new Vector2(48 * x, 48 * y), true);
+
+                        tileList.Add(tile);
+
+                        Console.WriteLine("x=" + x + " y=" + y + " is " + textureIndex);
+                            break;
+
+                        case 3:
+
+
+
+                            tile = new Tile(Content.Load<Texture2D>("art/fShelf/shelfMid"), 48, 48, new Vector2(48 * x, 48 * y), true);
+
+                            tileList.Add(tile);
+
+                            Console.WriteLine("x=" + x + " y=" + y + " is " + textureIndex);
+                            break;
+
+                        case 4:
+
+
+
+                            tile = new Tile(Content.Load<Texture2D>("art/fShelf/shelfRight"), 48, 48, new Vector2(48 * x, 48 * y), true);
+
+                            tileList.Add(tile);
+
+                            Console.WriteLine("x=" + x + " y=" + y + " is " + textureIndex);
+                            break;
+
+                        default:
+                            Console.WriteLine("x=" + x + " y=" + y + " is " + textureIndex);
+                            break;
+                    }
+
+
+                    /*
                     if (textureIndex == 1)
                     {
 
@@ -176,7 +230,7 @@ namespace tile_r
                     else
                     {
                         Console.WriteLine("x=" + x + " y=" + y + " is " + textureIndex);
-                    }
+                    }*/
 
 
                 }
@@ -193,7 +247,7 @@ namespace tile_r
         protected override void Update(GameTime gameTime)
         {
 
-            
+            gamepad = GamePad.GetState(PlayerIndex.One);
             KeyboardState keyboardState = Keyboard.GetState();
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Escape))
@@ -404,7 +458,7 @@ namespace tile_r
                     }
                 }
 
-                if ((keyboardState.IsKeyDown(Keys.Space) && !prevKey.IsKeyDown(Keys.Space)) || (gamepad.Buttons.A == ButtonState.Pressed))
+                if ((keyboardState.IsKeyDown(Keys.Space) && !prevKey.IsKeyDown(Keys.Space)) || (gamepad.Buttons.A == ButtonState.Pressed && prevGamePad.Buttons.A == ButtonState.Released))
                 {
                     standing = false;
                     playerVelocity -= new Vector2(0, jump);
@@ -488,7 +542,15 @@ namespace tile_r
             }
 
 
-            gamepad = GamePad.GetState(PlayerIndex.One);
+
+
+            if ((player.Position.X - cam._pos.X) > graphics.GraphicsDevice.Viewport.Width * 0.40)
+                cam._pos += new Vector2(4, 0f);
+
+
+            if ((player.Position.X - cam._pos.X) < -graphics.GraphicsDevice.Viewport.Width * 0.40)
+                cam._pos += new Vector2(-4, 0f);
+
 
             
 
@@ -502,6 +564,7 @@ namespace tile_r
 
             prevKey = keyboardState;
 
+            prevGamePad = gamepad;
 
             foreach (Ninja ninja in ninjaList)
             {
