@@ -28,7 +28,7 @@ namespace tile_r
         public Ninja(Texture2D texture, Vector2 targetPosition, Vector2 targetVelocity)
         {
             this.texture = texture;
-            this.position.X = targetPosition.X + (targetVelocity.X/2);
+            this.position.X = targetPosition.X + (targetVelocity.X/3);
             this.position.Y = 0 - texture.Height;
             this.ninjaVelocity.Y = (position.Y - targetPosition.Y);
             this.targetPos = targetPosition;
@@ -61,7 +61,7 @@ namespace tile_r
                 
                 standning = false;*/
             }
-            position.Y -= (ninjaVelocity.Y*2) * elapsed;
+            position.Y -= (ninjaVelocity.Y*3) * elapsed;
             
 
           

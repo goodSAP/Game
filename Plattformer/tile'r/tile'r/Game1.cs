@@ -39,7 +39,7 @@ namespace tile_r
         Texture2D ninjaTexture;
         float tempPos;
         List<Speeder> speederList = new List<Speeder>();
-        float jump = 550;
+        float jump = 950;
         
 
         int[,] map = new int[,]
@@ -127,7 +127,7 @@ namespace tile_r
             animation.Initialize(sprite, new Vector2(0, 0), 48, 84, 4, 150, Color.White, 1f, true);
 
 
-            player.Initialize(animation, new Vector2(10, 700));
+            player.Initialize(animation, new Vector2(10, -700));
 
             KeyboardState prevKey = Keyboard.GetState();
 
@@ -210,8 +210,18 @@ namespace tile_r
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 
-        
 
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
+            {
+
+
+                graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+
+
+                graphics.IsFullScreen = !graphics.IsFullScreen;
+                graphics.ApplyChanges();
+            }
 
 
 
@@ -496,14 +506,14 @@ namespace tile_r
             foreach (Ninja ninja in ninjaList)
             {
                 ninja.Update(gameTime);
-                if ((ninja.timer >= 1.5f) || ninja.position.Y > 800)
+                if ((ninja.timer >= 1.5f) || ninja.position.Y > 1500)
                 {
                     ninja.respawn(player.Position, playerVelocity);
                     ninja.timer = 0f;
                 }
                 if (ninja.timer > 0 && ninja.timer <= 1.5f)
                 {
-                    if (player.hitbox.Intersects(ninja.hitbox)&& !ninja.standning)
+                    if (player.hitbox.Intersects(ninja.hitbox)&& ninja.standning)
                     {
                         ninjaList.Remove(ninja);
                     }
@@ -544,11 +554,7 @@ namespace tile_r
                         cam.get_transformation(GraphicsDevice /*Send the variable that has your graphic device here*/));
 
          
-            foreach (Tile tile in tileList)
-            {
-                tile.Draw(spriteBatch);
-
-            }
+           
 
 
             foreach (Ninja ninja in ninjaList)
@@ -561,6 +567,12 @@ namespace tile_r
                 speeder.Draw(spriteBatch);
             }
             
+             foreach (Tile tile in tileList)
+            {
+                tile.Draw(spriteBatch);
+
+            }
+
 
             player.Draw(spriteBatch, rotation);
             //  Console.WriteLine(cam.Pos.X + " " + cam.Pos.Y);
