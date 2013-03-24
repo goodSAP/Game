@@ -321,6 +321,45 @@ namespace tile_r
             }
 
 
+
+
+
+
+            for (int x = ninjaList.Count - 1; x >= 0; x--)
+            {
+                ninjaList[x].Update(gameTime);
+                if ((ninjaList[x].timer >= 1.5f) || ninjaList[x].position.Y > 1500)
+                {
+                    ninjaList[x].respawn(player.Position, playerVelocity);
+                    ninjaList[x].timer = 0f;
+                }
+                if (ninjaList[x].timer > 0 && ninjaList[x].timer <= 1.5f)
+                {
+                    if (player.hitbox.Intersects(ninjaList[x].hitbox) && ninjaList[x].standning)
+                    {
+                        
+                        ninjaList.RemoveAt(x);
+                    }
+                   
+                }
+
+                if (player.hitbox.Intersects(ninjaList[x].hitbox) && !ninjaList[x].standning)
+                {
+                    ninjaList.Remove(ninjaList[x]);
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+
+
             foreach (Tile tile in tileList)
             {
 
@@ -566,23 +605,8 @@ namespace tile_r
 
             prevGamePad = gamepad;
 
-            foreach (Ninja ninja in ninjaList)
-            {
-                ninja.Update(gameTime);
-                if ((ninja.timer >= 1.5f) || ninja.position.Y > 1500)
-                {
-                    ninja.respawn(player.Position, playerVelocity);
-                    ninja.timer = 0f;
-                }
-                if (ninja.timer > 0 && ninja.timer <= 1.5f)
-                {
-                    if (player.hitbox.Intersects(ninja.hitbox)&& ninja.standning)
-                    {
-                        ninjaList.Remove(ninja);
-                    }
-
-                }
-            }
+          //  foreach (Ninja ninja in ninjaList)
+            
                 
 
 
