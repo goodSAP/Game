@@ -109,7 +109,7 @@ namespace tile_r
 
             //speederSprite = Content.Load<Texture2D>("Speeder");
 
-            cam.Pos = new Vector2(682.0f, 334.0f);
+            cam.Pos = new Vector2(682.0f, 526.0f);
 
             gamepad = GamePad.GetState(PlayerIndex.One);
 
@@ -131,7 +131,7 @@ namespace tile_r
             animation.Initialize(sprite, new Vector2(0, 0), 48, 84, 4, 150, Color.White, 1f, true);
 
 
-            player.Initialize(animation, new Vector2(200, 500));
+            player.Initialize(animation, new Vector2(550, 500));
 
             KeyboardState prevKey = Keyboard.GetState();
             prevGamePad = GamePad.GetState(PlayerIndex.One);
@@ -583,7 +583,7 @@ namespace tile_r
             }*/
 
 
-
+            cam._pos.X = MathHelper.Lerp(cam._pos.X, player.Position.X, 0.1f);
 
             if ((player.Position.X - cam._pos.X) > graphics.GraphicsDevice.Viewport.Width * 0.10)
                 cam._pos += new Vector2(Math.Abs(playerVelocity.X) / 80, 0f);
@@ -593,7 +593,7 @@ namespace tile_r
                 cam._pos -= new Vector2(Math.Abs(playerVelocity.X) / 80, 0f);
 
 
-            
+            cam._pos.X = MathHelper.Clamp(cam._pos.X, 682f, 10000);
 
 
             animation.frameTime = 130f - Math.Abs(playerVelocity.X / 10);
