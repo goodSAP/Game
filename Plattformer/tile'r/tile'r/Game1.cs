@@ -81,7 +81,7 @@ namespace tile_r
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            player = new Player();
+            
             
             
 
@@ -98,7 +98,7 @@ namespace tile_r
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             crate = Content.Load<Texture2D>("art/crate");
-
+            player = new Player();
             wood = Content.Load<Texture2D>("art/floor");
 
             ninjaTexture = Content.Load<Texture2D>("art/Ninja");
@@ -332,17 +332,16 @@ namespace tile_r
                     ninjaList[x].respawn(player.Position, playerVelocity);
                     ninjaList[x].timer = 0f;
                 }
-                if (ninjaList[x].timer > 0 && ninjaList[x].timer <= 1.5f)
-                {
+                
                     if (player.hitbox.Intersects(ninjaList[x].hitbox) && ninjaList[x].standning)
                     {
                         
                         ninjaList.RemoveAt(x);
                     }
                    
-                }
+                
 
-                if (player.hitbox.Intersects(ninjaList[x].hitbox) && !ninjaList[x].standning)
+                    else if (player.hitbox.Intersects(ninjaList[x].hitbox) && !ninjaList[x].standning)
                 {
                     ninjaList.Remove(ninjaList[x]);
                 }
