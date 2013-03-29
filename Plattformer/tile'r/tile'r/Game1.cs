@@ -583,11 +583,11 @@ namespace tile_r
 
 
 
-            if ((player.Position.X - cam._pos.X) > graphics.GraphicsDevice.Viewport.Width * 0.30)
+            if ((player.Position.X - cam._pos.X) > graphics.GraphicsDevice.Viewport.Width * 0.18)
                 cam._pos += new Vector2(Math.Abs(playerVelocity.X) / 80, 0f);
 
 
-            if ((player.Position.X - cam._pos.X) < -graphics.GraphicsDevice.Viewport.Width * 0.30)
+            if ((player.Position.X - cam._pos.X) < -graphics.GraphicsDevice.Viewport.Width * 0.18)
                 cam._pos -= new Vector2(Math.Abs(playerVelocity.X) / 80, 0f);
 
 
