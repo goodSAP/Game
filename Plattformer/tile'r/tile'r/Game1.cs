@@ -504,6 +504,7 @@ namespace tile_r
                     standing = false;
                     playerVelocity -= new Vector2(0, jump);
                 }
+
                 //Secret Jumping combination that no human being will ever think of
                 if (keyboardState.IsKeyDown(Keys.Insert) && keyboardState.IsKeyDown(Keys.Space))
                 {
