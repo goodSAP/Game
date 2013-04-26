@@ -1,14 +1,14 @@
 Content\background.xnb
 Content\blank.xnb
 Content\gradient.xnb
-Content\menufont.xnb
-Content\gamefont.xnb
 Content\art\Crate.xnb
 Content\art\floor.xnb
 Content\art\jasperrun.xnb
 Content\art\jasperrunCopy.xnb
 Content\art\Ninja.xnb
-Content\art\fShelf\shelfLeft.xnb
 Content\art\fShelf\shelfRight.xnb
+Content\art\fShelf\shelfLeft.xnb
 Content\art\fShelf\shelfMid.xnb
 Content\art\life.xnb
+Content\menufont.xnb
+Content\gamefont.xnb
