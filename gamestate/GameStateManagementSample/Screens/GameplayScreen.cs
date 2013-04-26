@@ -71,6 +71,8 @@ namespace GameStateManagement
         int life = 3;
         MouseState mouse;
         Vector2 test = new Vector2(-613, -327);
+        Tile endTile;
+                
         #region Map
         int[,] map = new int[,]
             {                                                                                                                                                                                                /*introduce enemies here*/                                   
@@ -248,7 +250,7 @@ namespace GameStateManagement
                         case 5:
                             
                             
-
+                            
                             tile = new Tile(content.Load<Texture2D>(@"art/Crate"), 48, 48, new Vector2(48 * x, 48 * y), true);
 
                             tileList.Add(tile);
@@ -257,16 +259,17 @@ namespace GameStateManagement
 
                             break;
 
-                        /*case 6:
+                        case 6:
 
 
 
-                            tile = new Tile(content.Load<Texture2D>("art/empty"), 48, 48, new Vector2(48 * x, 48 * y), true);
+                            endTile = new Tile(content.Load<Texture2D>(@"art/Crate"), 48, 48, new Vector2(48 * x, 48 * y), true);
 
-                            tileList.Add(tile);
 
                             Console.WriteLine("x=" + x + " y=" + y + " is " + textureIndex);
-                            break;*/
+
+                            break;
+                       
 
                         default:
                             Console.WriteLine("x=" + x + " y=" + y + " is " + textureIndex);
@@ -281,6 +284,7 @@ namespace GameStateManagement
                         Tile tile;
                         Vector2 pos = new Vector2(48 * x, 48 * y);
 
+                     * 
                         tile = new Tile(wood, 48, 48, pos, true);
 
                         tileList.Add(tile);
@@ -336,6 +340,12 @@ namespace GameStateManagement
                 Vector2 targetPosition = new Vector2(
                     ScreenManager.GraphicsDevice.Viewport.Width / 2 - gameFont.MeasureString("Insert Gameplay Here").X / 2, 
                     200);
+
+                if(endTile.BoundingBox.Intersects(player.hitbox))
+                {
+                    LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(), new MainMenuScreen());
+                }
+
 
                 enemyPosition = Vector2.Lerp(enemyPosition, targetPosition, 0.05f);
 
@@ -442,8 +452,8 @@ namespace GameStateManagement
 
             }
 
-            spriteBatch.Draw(lifeBar, new Rectangle((int)cam.Pos.X+(int)test.X, (int)cam.Pos.Y+(int)test.Y, lifeBar.Width,(life*16)), Color.White);
-            Console.WriteLine(test.X + " + " + test.Y);
+            //spriteBatch.Draw(lifeBar, new Rectangle((int)cam.Pos.X+(int)test.X, (int)cam.Pos.Y+(int)test.Y, lifeBar.Width,(life*16)), Color.White);
+            //Console.WriteLine(test.X + " + " + test.Y);
             player.Draw(spriteBatch, rotation);
             //  Console.WriteLine(cam.Pos.X + " " + cam.Pos.Y);
             Console.WriteLine(playerVelocity.X);
@@ -493,9 +503,10 @@ namespace GameStateManagement
 
             if (life < 1)
             {
-                
 
-                LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(), new MainMenuScreen());
+                player.Position.X = 500;
+                player.Position.Y = 550;
+                life = 1;
                                                       
             }
 
