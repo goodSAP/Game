@@ -77,7 +77,9 @@ namespace GameStateManagement
 
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
+            graphics.IsFullScreen = !graphics.IsFullScreen;
             graphics.ApplyChanges();
+            
 
 
             double dt = (double)1000 / (double)120;
